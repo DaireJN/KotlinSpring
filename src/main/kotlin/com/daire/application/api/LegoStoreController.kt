@@ -8,15 +8,19 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("legostore/api")
 class LegoStoreController(val mongoTemplate: MongoTemplate) {
 
-    @PostMapping
+    @PostMapping("/add")
     fun insert(@RequestBody legoSet: LegoSet): LegoSet {
-        mongoTemplate.insert(legoSet)
-        return legoSet
+        return mongoTemplate.insert(legoSet)
     }
 
     @GetMapping("/all")
     fun all(): Collection<LegoSet> {
         return mongoTemplate.findAll(LegoSet::class.java)
+    }
+
+    @PutMapping("/update")
+    fun update(@RequestBody legoSet: LegoSet){
+        mongoTemplate.save(legoSet)
     }
 
 }

@@ -24,5 +24,5 @@ class LegoSet(
         var nbParts: Int
 ) {
     @Id
-    private var id: String = java.util.UUID.randomUUID().toString()
+    var id: String = java.util.UUID.randomUUID().toString()
 }
