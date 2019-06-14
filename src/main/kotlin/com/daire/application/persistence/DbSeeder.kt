@@ -7,12 +7,16 @@ import java.time.LocalDate
 import com.daire.application.models.DeliveryInfo
 import com.daire.application.models.LegoSetDifficulty
 import com.daire.application.models.LegoSet
+import org.springframework.data.mongodb.core.MongoTemplate
 import java.util.*
 
 
 @Component
-class DbSeeder : CommandLineRunner {
+class DbSeeder(val mongoTemplate: MongoTemplate) : CommandLineRunner {
+
     override fun run(vararg args: String?) {
+
+        mongoTemplate.dropCollection(LegoSet::class.java)
 
         /*
         Lego Sets
@@ -41,6 +45,10 @@ class DbSeeder : CommandLineRunner {
                         ProductReview("John", 8)
                 ),
                 nbParts = 3)
+
+        val list = listOf(falcon, star)
+
+        mongoTemplate.insertAll(list)
 
         println("db initialised")
     }
