@@ -55,6 +55,4 @@ class LegoStoreController(val legoSetRepository: LegoSetRepository) {
     fun greatReviews(): Collection<LegoSet> {
         return legoSetRepository.findAllByGreatReviews()
     }
-
-
 }
