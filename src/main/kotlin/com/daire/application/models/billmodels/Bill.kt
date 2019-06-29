@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id
 
 class Bill(
         var name: String = "",
-        var type: BillType? = null,
+        var type: BillType,
         var serviceCharge: Double? = null,
         var tip: Double? = null,
         var total: Double? = null,

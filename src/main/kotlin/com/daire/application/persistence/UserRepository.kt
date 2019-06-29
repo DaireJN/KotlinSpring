@@ -9,4 +9,7 @@ interface UserRepository : MongoRepository<User, String> {
 
     fun deleteByIdAndPassword(id: String, password: String): User
 
+    fun findByNameAndPassword(name: String, password: String): User
+
+    fun findByEmailAndPassword(email: String, password: String): User
 }
