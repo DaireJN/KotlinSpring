@@ -13,15 +13,18 @@ class DbSeeder(val mongoTemplate: MongoTemplate) : CommandLineRunner {
 
     override fun run(vararg args: String?) {
 
-        mongoTemplate.dropCollection(User::class.java)
+        //mongoTemplate.dropCollection(User::class.java)
+
+        val b = Bill("PS4", BillType.EVEN)
+        b.id = "2"
 
         val u = User("Tom", "tommo", "tom@tom.com", "mfpomwpofme")
         val u1 = User("Bob", "Bobby", "b@b.com", "b")
-        val u2 = User("test", "test", "test@gmail.com", "tester", mutableListOf(Bill("PS4", BillType.EVEN)))
+        val u2 = User("test", "test", "test@gmail.com", "tester", mutableListOf(b))
         u2.id = "1"
         val list = listOf(u, u1, u2)
 
-        mongoTemplate.insertAll(list)
+        //mongoTemplate.insertAll(list)
 
         println("db initialised")
     }

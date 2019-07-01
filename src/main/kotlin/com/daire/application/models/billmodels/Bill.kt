@@ -1,6 +1,7 @@
 package com.daire.application.models.billmodels
 
 import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.Document
 
 class Bill(
         var name: String = "",

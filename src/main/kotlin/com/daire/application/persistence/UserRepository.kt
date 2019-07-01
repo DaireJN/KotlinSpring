@@ -12,4 +12,7 @@ interface UserRepository : MongoRepository<User, String> {
     fun findByNameAndPassword(name: String, password: String): User
 
     fun findByEmailAndPassword(email: String, password: String): User
+
+    @Query("{'bills._id' : '2' }")
+    fun findBillsById(): Collection<User>
 }
