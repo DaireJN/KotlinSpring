@@ -2,19 +2,19 @@ package com.daire.application.api
 
 import com.daire.application.models.billmodels.Bill
 import com.daire.application.models.usermodels.User
+import com.daire.application.models.usermodels.UserDashboard
 import com.daire.application.models.usermodels.UserLoginRequest
+import com.daire.application.persistence.DashBoardService
 import com.daire.application.persistence.UserRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import javax.xml.ws.Response
-import kotlin.math.E
-import java.util.HashMap
+import org.springframework.web.server.ResponseStatusException
 
 
 @RestController
 @RequestMapping("api/user")
-class UserController(val userRepository: UserRepository) {
+class UserController(val userRepository: UserRepository, val dashBoardService: DashBoardService) {
 
     @GetMapping("/all")
     fun getAllUsers(): List<User> {
@@ -32,6 +32,7 @@ class UserController(val userRepository: UserRepository) {
         return if (user != null) {
             ResponseEntity(user.bills, HttpStatus.OK)
         } else {
+
             ResponseEntity("The user with the $id does not exist", HttpStatus.NOT_FOUND)
         }
     }
@@ -52,13 +53,21 @@ class UserController(val userRepository: UserRepository) {
         }
     }
 
+    @GetMapping("/{id}/dashboard")
+    fun getUserDashboard(@PathVariable("id") id: String): UserDashboard {
+        return dashBoardService.getUserDashBoard(id)[0]
+    }
 
     @PutMapping("/{id}")
     fun addBillToUser(@PathVariable("id") id: String, @RequestBody bill: Bill) {
-        val user = userRepository.findById(id)
-        user.ifPresent { userResult ->
-            userResult.bills.add(bill)
-            userRepository.save(userResult)
+        val user = userRepository.findById(id).orElse(null)
+        if (user != null) {
+            user.bills.add(bill)
+            userRepository.save(user)
+        } else {
+            throw ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "a user with the id $id does not exist"
+            )
         }
     }
 }

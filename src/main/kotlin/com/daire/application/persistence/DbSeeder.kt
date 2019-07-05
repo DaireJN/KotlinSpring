@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
 import com.daire.application.models.billmodels.Bill
 import com.daire.application.models.billmodels.BillType
+import com.daire.application.models.usermodels.UserDashboard
 import org.springframework.data.mongodb.core.MongoTemplate
 
 
@@ -13,7 +14,7 @@ class DbSeeder(val mongoTemplate: MongoTemplate) : CommandLineRunner {
 
     override fun run(vararg args: String?) {
 
-        //mongoTemplate.dropCollection(User::class.java)
+        mongoTemplate.dropCollection(UserDashboard::class.java)
 
         val b = Bill("PS4", BillType.EVEN)
         b.id = "2"
